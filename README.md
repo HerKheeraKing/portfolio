@@ -1,4 +1,4 @@
-# 🪷 Kheera King - Portfolio
+# 🖤 Kheera King - Portfolio
 
 *Simulation Engineer • XR/VR • Machine Learning • Digital Twins*
 
