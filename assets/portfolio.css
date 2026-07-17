@@ -1,0 +1,89 @@
+/*
+ * portfolio.css - hand-written styles for the portfolio.
+ *
+ * The Webflow-generated stylesheet under site/ is vendor output and loads
+ * first; this file holds only our own tweaks, kept in one place so they are
+ * easy to find and edit. It is linked after the Webflow CSS so these rules win
+ * on equal specificity.
+ */
+
+/* Stop the page from rubber-banding / scroll-chaining past its edges. */
+html,
+body
+{
+	overscroll-behavior: none;
+}
+
+/* Keep the Experience section clear of the block above it. */
+.Experience-section
+{
+	margin-top: 50px !important;
+}
+
+/* On narrow screens the arrow crowds its label, so give it a little room. */
+@media (max-width: 1220px)
+{
+	.arrow
+	{
+		margin-right: 6px;
+	}
+}
+
+/* Round the corners of every embedded project video. */
+iframe
+{
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+/*
+ * Experience titles glow on hover and stay lit once clicked until a different
+ * title is chosen. This transition is shared by the hover state and the clicked
+ * (.active-glow) state so both animate with the same color and timing.
+ */
+.xr-trainer-text,
+.vr-ar-tour-text,
+.cad-motion-text,
+.xfoundry-text,
+.embedded-nav-text,
+.unity-dungeon-text,
+.data-vis-text,
+.server-chat-text,
+.hci-ux-text,
+.cellular-text,
+.calculator-text
+{
+	transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* The "currently selected title" look, applied by portfolio.js on click. */
+.active-glow
+{
+	color: var(--white-smoke);
+	text-shadow: 0 0 8px var(--blue-glow);
+}
+
+/*
+ * Detail-panel fade-in. Every panel renders in the same slot (only one is
+ * visible at a time), so scrolling is often a no-op - this fade is the main
+ * "something changed" cue and always plays. No border/box glow on the panel.
+ */
+.panel-reveal
+{
+	animation: panelFadeIn 0.45s ease;
+}
+
+@keyframes panelFadeIn
+{
+	0%
+	{
+		opacity: 0;
+		transform: translateY(18px);
+	}
+
+	100%
+	{
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
