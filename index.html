@@ -42,9 +42,25 @@
 }
 
 
-/* Experience labels glows when clicked */
+/* Experience labels glow smoothly on hover, and clicking keeps that glow applied
+   until a different title is clicked (matches the hover glow color/timing) */
+.xr-trainer-text,
+.vr-ar-tour-text,
+.cad-motion-text,
+.xfoundry-text,
+.embedded-nav-text,
+.unity-dungeon-text,
+.data-vis-text,
+.server-chat-text,
+.hci-ux-text,
+.cellular-text,
+.calculator-text {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
 .active-glow {
-  text-shadow: 0 0 8px #a0f3ff, 0 0 16px #a0f3ff;
+  color: var(--white-smoke);
+  text-shadow: 0 0 8px var(--blue-glow);
 }
 
 </style>
@@ -52,10 +68,13 @@
 
 
 <script>
-  const items = document.querySelectorAll('.GlowText');
-  items.forEach(item => {
-    item.addEventListener('click', () => {
-      items.forEach(i => i.classList.remove('active-glow'));
+  const glowItems = document.querySelectorAll(
+    '.xr-trainer-text, .vr-ar-tour-text, .cad-motion-text, .xfoundry-text, .embedded-nav-text, .unity-dungeon-text, .data-vis-text, .server-chat-text, .hci-ux-text, .cellular-text, .calculator-text'
+  );
+  glowItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      glowItems.forEach(i => i.classList.remove('active-glow'));
       item.classList.add('active-glow');
     });
   });
