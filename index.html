@@ -63,6 +63,22 @@
   text-shadow: 0 0 8px var(--blue-glow);
 }
 
+/* Smooth fade/slide-in for the detail panel that appears after a title is clicked */
+.panel-reveal {
+  animation: panelFadeIn 0.4s ease;
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
 
 
@@ -71,11 +87,40 @@
   const glowItems = document.querySelectorAll(
     '.xr-trainer-text, .vr-ar-tour-text, .cad-motion-text, .xfoundry-text, .embedded-nav-text, .unity-dungeon-text, .data-vis-text, .server-chat-text, .hci-ux-text, .cellular-text, .calculator-text'
   );
+
+  /* Maps each title's text class to the id of the detail panel it reveals on the right */
+  const glowTargetMap = {
+    'xr-trainer-text': 'tacticle-AR',
+    'vr-ar-tour-text': 'AR-Tour',
+    'cad-motion-text': 'CAD',
+    'xfoundry-text': 'Hackathon',
+    'embedded-nav-text': 'Geocache',
+    'unity-dungeon-text': 'Gritty',
+    'data-vis-text': 'Data-vis',
+    'server-chat-text': 'server-chat',
+    'hci-ux-text': 'HCI',
+    'cellular-text': 'game-of-life',
+    'calculator-text': 'calc'
+  };
+
   glowItems.forEach(item => {
     item.addEventListener('click', (e) => {
       e.preventDefault();
       glowItems.forEach(i => i.classList.remove('active-glow'));
       item.classList.add('active-glow');
+
+      const targetClass = Object.keys(glowTargetMap).find(cls => item.classList.contains(cls));
+      const targetPanel = targetClass && document.getElementById(glowTargetMap[targetClass]);
+
+      if (targetPanel) {
+        // small delay lets the panel's own show/hide finish before we scroll to it
+        setTimeout(() => {
+          targetPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetPanel.classList.remove('panel-reveal');
+          void targetPanel.offsetWidth; // restart the animation each time
+          targetPanel.classList.add('panel-reveal');
+        }, 60);
+      }
     });
   });
 </script>
