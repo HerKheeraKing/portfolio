@@ -60,6 +60,18 @@
     });
   });
 </script>
+<style>.w-webflow-badge{display:none!important;}</style>
+<script>
+  (function removeWebflowBadge(){
+    var badge = document.querySelector('.w-webflow-badge');
+    if (badge) { badge.remove(); return; }
+    var observer = new MutationObserver(function(){
+      var b = document.querySelector('.w-webflow-badge');
+      if (b) { b.remove(); observer.disconnect(); }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
 </body>
 <!-- Mirrored from betakheera-df0dbcd45e291f2561d6c95f3a17.webflow.io/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Jul 2026 19:48:51 GMT -->
 </html>
