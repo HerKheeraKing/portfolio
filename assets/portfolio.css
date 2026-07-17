@@ -87,3 +87,17 @@ iframe
 		transform: translateY(0);
 	}
 }
+/*
+ * Tech list in About Me: each row is "left label -> right label", two per
+ * line (e.g. "Unreal Engine -> VR/AR"). Both columns share .skill-set-text,
+ * but only the LEFT column needs a fixed width, so the arrow starting the
+ * right column lands in the same spot on every row regardless of how long
+ * the left label is. .skill-label marks just those left-column spans.
+ * (Previously this alignment was done with hand-counted nbsp characters
+ * in the HTML, which drifted and was impossible to reason about.)
+ */
+.skill-label
+{
+	display: inline-block;
+	width: 170px;
+}
