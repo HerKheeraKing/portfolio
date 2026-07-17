@@ -63,19 +63,28 @@
   text-shadow: 0 0 8px var(--blue-glow);
 }
 
-/* Smooth fade/slide-in for the detail panel that appears after a title is clicked */
+/* Smooth fade/slide-in + glow pulse for the detail panel that appears after a title is
+   clicked. The panel always renders in the exact same spot on screen (only one detail
+   panel is ever visible at a time, in the same slot), so a page scroll is often a no-op -
+   this animation is the primary "something changed" cue and always plays, regardless of
+   whether the panel needed to be scrolled into view. */
 .panel-reveal {
-  animation: panelFadeIn 0.4s ease;
+  animation: panelFadeIn 0.45s ease;
 }
 
 @keyframes panelFadeIn {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(18px);
+    box-shadow: 0 0 0 rgba(160, 243, 255, 0);
   }
-  to {
+  35% {
+    box-shadow: 0 0 24px rgba(160, 243, 255, 0.35);
+  }
+  100% {
     opacity: 1;
     transform: translateY(0);
+    box-shadow: 0 0 0 rgba(160, 243, 255, 0);
   }
 }
 
@@ -113,9 +122,18 @@
       const targetPanel = targetClass && document.getElementById(glowTargetMap[targetClass]);
 
       if (targetPanel) {
-        // small delay lets the panel's own show/hide finish before we scroll to it
+        // small delay lets the panel's own show/hide finish before we touch it
         setTimeout(() => {
-          targetPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // All the detail panels sit in the exact same spot on screen (only one is ever
+          // visible at a time), so scrolling to it is often a no-op. Only scroll if the
+          // panel genuinely isn't fully visible; the fade/glow below is what actually
+          // signals a change, and it always plays regardless of scroll position.
+          const rect = targetPanel.getBoundingClientRect();
+          const fullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+          if (!fullyVisible) {
+            targetPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+
           targetPanel.classList.remove('panel-reveal');
           void targetPanel.offsetWidth; // restart the animation each time
           targetPanel.classList.add('panel-reveal');
