@@ -63,11 +63,11 @@
   text-shadow: 0 0 8px var(--blue-glow);
 }
 
-/* Smooth fade/slide-in + glow pulse for the detail panel that appears after a title is
-   clicked. The panel always renders in the exact same spot on screen (only one detail
-   panel is ever visible at a time, in the same slot), so a page scroll is often a no-op -
-   this animation is the primary "something changed" cue and always plays, regardless of
-   whether the panel needed to be scrolled into view. */
+/* Clean fade-in for the detail text that appears after a title is clicked. The panel
+   always renders in the exact same spot on screen (only one detail panel is ever visible
+   at a time, in the same slot), so a page scroll is often a no-op - this fade is the
+   primary "something changed" cue and always plays, regardless of whether the panel
+   needed to be scrolled into view. No box/border/outline glow on the panel itself. */
 .panel-reveal {
   animation: panelFadeIn 0.45s ease;
 }
@@ -76,15 +76,10 @@
   0% {
     opacity: 0;
     transform: translateY(18px);
-    box-shadow: 0 0 0 rgba(160, 243, 255, 0);
-  }
-  35% {
-    box-shadow: 0 0 24px rgba(160, 243, 255, 0.35);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
-    box-shadow: 0 0 0 rgba(160, 243, 255, 0);
   }
 }
 
